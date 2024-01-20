@@ -63,8 +63,7 @@ public class BlueNoPark extends LinearOpMode {
                 .strafeLeft(23)
                 .forward(11)
                 .strafeLeft(72)
-                .back(35)
-                .strafeLeft(70)
+                .strafeLeft(45)
                 .build();
 
         elbow.setPower(0.3);

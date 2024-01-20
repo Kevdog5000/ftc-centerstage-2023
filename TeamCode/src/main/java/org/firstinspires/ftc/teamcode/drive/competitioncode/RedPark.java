@@ -88,7 +88,7 @@ public class RedPark extends LinearOpMode {
                 .build();
 
         TrajectorySequence trajSeq2Middle = drive.trajectorySequenceBuilder(startPose)
-                .splineToSplineHeading(new Pose2d(39, -20, Math.toRadians(180)), 180)
+                .splineToSplineHeading(new Pose2d(39, -22, Math.toRadians(180)), 180)
                 .build();
 
         TrajectorySequence trajSeqResetRight = drive.trajectorySequenceBuilder(startPose)
