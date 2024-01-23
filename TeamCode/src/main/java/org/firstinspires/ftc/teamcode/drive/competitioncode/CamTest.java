@@ -23,8 +23,13 @@ public class CamTest extends LinearOpMode {
         auto.readSleeve();
 
         if (auto.sleeveSide == CamDetector.Side.FIRST) {
+            // do stuff
+        } else if (auto.sleeveSide == CamDetector.Side.SECOND){
+         // do stuff
+        } else {
+            // do stuff
         }
-
+        sleep (30000);
 
     }   // end class
 }

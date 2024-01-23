@@ -21,15 +21,15 @@ public class CamDetector extends OpenCvPipeline {
     }
     Side side;
 
-    public static double ROI_WIDTH = 128;
-    public static double ROI_HEIGHT = 64;
+    public static double ROI_WIDTH = 40;
+    public static double ROI_HEIGHT = 40;
     //mess around with numbers
-    public static double ROI_X_1 = 155;
-    public static double ROI_Y_1 = 146;
-    public static double ROI_X_2 = 205;
-    public static double ROI_Y_2 = 146;
-    public static double ROI_X_3 = 255;
-    public static double ROI_Y_3 = 146;
+    public static double ROI_X_1 = 40;
+    public static double ROI_Y_1 = 130;
+    public static double ROI_X_2 = 155;
+    public static double ROI_Y_2 = 120;
+    public static double ROI_X_3 = 275;
+    public static double ROI_Y_3 = 140;
 
     // in RGB
     // if white = good; else red = bad

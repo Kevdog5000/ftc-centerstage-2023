@@ -22,7 +22,8 @@ public class BlueNoPark extends LinearOpMode {
     private Servo claw = null;
     private Servo wrist = null;
 
-    
+    private Auto auto = new Auto(telemetry);
+
     @Override
     public void runOpMode() {
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
@@ -40,8 +41,6 @@ public class BlueNoPark extends LinearOpMode {
         elbow = hardwareMap.get(DcMotor.class, "elbow");
         claw = hardwareMap.get(Servo.class, "claw");
         wrist = hardwareMap.get(Servo.class,"wrist");
-
-        cam Cam = new cam(hardwareMap, telemetry);
 
         // Wait for the DS start button to be touched.
         telemetry.addData("DS preview on/off", "3 dots, Camera Stream");
@@ -72,11 +71,9 @@ public class BlueNoPark extends LinearOpMode {
 
         waitForStart();
 
-        //Cam.initTfod();
 
         while (opModeIsActive()) {
 
-            //Cam.telemetryTfod();
 
             drive.followTrajectorySequence(trajSeq1Right);
             intake_wheels.setPower(-0.5);
@@ -87,7 +84,7 @@ public class BlueNoPark extends LinearOpMode {
 
 
 /*
-                if (Cam.side == cam.Side.Right){
+                if (auto.sleeveSide == CamDetector.Side.FIRST){
 
                     drive.followTrajectorySequence(trajSeq1Right);
                     intake_wheels.setPower(-0.75);
@@ -101,7 +98,7 @@ public class BlueNoPark extends LinearOpMode {
                     elbow.setTargetPosition(0);
                     drive.followTrajectorySequence(trajSeq3);
                 }
-                else if (Cam.side == cam.Side.Middle){
+                else if (auto.sleeveSide == CamDetector.Side.SECOND){
 
                     drive.followTrajectorySequence(trajSeq1Middle);
                     intake_wheels.setPower(-0.75);
@@ -115,7 +112,7 @@ public class BlueNoPark extends LinearOpMode {
                     elbow.setTargetPosition(0);
                     drive.followTrajectorySequence(trajSeq3);
                 }
-                else if (Cam.side == cam.Side.Left){
+                else {
 
                     drive.followTrajectorySequence(trajSeq1Left);
                     intake_wheels.setPower(-0.75);

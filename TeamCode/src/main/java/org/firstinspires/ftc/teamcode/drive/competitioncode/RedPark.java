@@ -36,6 +36,7 @@ public class RedPark extends LinearOpMode {
     private Servo claw = null;
     private Servo wrist = null;
 
+    private Auto auto = new Auto(telemetry);
 
     @Override
     public void runOpMode() {
@@ -55,7 +56,6 @@ public class RedPark extends LinearOpMode {
         claw = hardwareMap.get(Servo.class, "claw");
         wrist = hardwareMap.get(Servo.class,"wrist");
 
-        cam Cam = new cam(hardwareMap, telemetry);
 
         // Wait for the DS start button to be touched.
         telemetry.addData("DS preview on/off", "3 dots, Camera Stream");

@@ -22,6 +22,7 @@ public class BluePark extends LinearOpMode {
     private Servo claw = null;
     private Servo wrist = null;
 
+    private Auto auto = new Auto(telemetry);
 
     @Override
     public void runOpMode() {
@@ -41,7 +42,6 @@ public class BluePark extends LinearOpMode {
         claw = hardwareMap.get(Servo.class, "claw");
         wrist = hardwareMap.get(Servo.class,"wrist");
 
-        cam Cam = new cam(hardwareMap, telemetry);
 
         // Wait for the DS start button to be touched.
         telemetry.addData("DS preview on/off", "3 dots, Camera Stream");
@@ -86,18 +86,31 @@ public class BluePark extends LinearOpMode {
                 .back(30)
                 .build();
 
+        TrajectorySequence testFirst = drive.trajectorySequenceBuilder(startPose)
+                .forward(30)
+                .strafeLeft(10)
+                .build();
+
+        TrajectorySequence testSecond = drive.trajectorySequenceBuilder(startPose)
+                .forward(30)
+                .strafeLeft(10)
+                .build();
+
+        TrajectorySequence testThird = drive.trajectorySequenceBuilder(startPose)
+                .forward(30)
+                .strafeLeft(10)
+                .build();
+
         elbow.setPower(0.3);
 
         //elbow.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         waitForStart();
 
-        //Cam.initTfod();
 
         while (opModeIsActive()) {
 
-            //Cam.telemetryTfod();
-
+/*
             drive.followTrajectorySequence(trajSeq1Left);
             intake_wheels.setPower(-0.5);
             sleep(2000);
@@ -122,9 +135,12 @@ public class BluePark extends LinearOpMode {
             sleep(30000);
 
 
-/*
-                if (Cam.side == cam.Side.Right){
+*/
+                if (auto.sleeveSide == CamDetector.Side.FIRST){
 
+                    drive.followTrajectorySequence(testFirst);
+                    sleep(10000);
+                    /*
                     drive.followTrajectorySequence(trajSeq1Right);
                     intake_wheels.setPower(-0.75);
                     sleep(2000);
@@ -136,9 +152,13 @@ public class BluePark extends LinearOpMode {
                     claw.setPosition(1);
                     elbow.setTargetPosition(0);
                     drive.followTrajectorySequence(trajSeq3);
+                    */
                 }
-                else if (Cam.side == cam.Side.Middle){
+                else if (auto.sleeveSide == CamDetector.Side.SECOND){
 
+                    drive.followTrajectorySequence(testSecond);
+                    sleep(10000);
+                    /*
                     drive.followTrajectorySequence(trajSeq1Middle);
                     intake_wheels.setPower(-0.75);
                     sleep(2000);
@@ -150,9 +170,14 @@ public class BluePark extends LinearOpMode {
                     claw.setPosition(1);
                     elbow.setTargetPosition(0);
                     drive.followTrajectorySequence(trajSeq3);
+                    */
                 }
-                else if (Cam.side == cam.Side.Left){
+                else {
 
+                    drive.followTrajectorySequence(testThird);
+                    sleep(10000);
+
+                    /*
                     drive.followTrajectorySequence(trajSeq1Left);
                     intake_wheels.setPower(-0.75);
                     sleep(2000);
@@ -164,8 +189,9 @@ public class BluePark extends LinearOpMode {
                     claw.setPosition(1);
                     elbow.setTargetPosition(0);
                     drive.followTrajectorySequence(trajSeq3);
+                    */
                 }
-*/
+
         }   // end runOpMode()
 
     }   // end class
