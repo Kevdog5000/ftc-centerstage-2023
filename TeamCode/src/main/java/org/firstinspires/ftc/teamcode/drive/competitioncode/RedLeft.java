@@ -10,8 +10,8 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 
-@Autonomous(name = "RedNoPark", group = "Concept")
-public class RedNoPark extends LinearOpMode {
+@Autonomous(name = "RedLeft", group = "Concept")
+public class RedLeft extends LinearOpMode {
     private ElapsedTime runtime = new ElapsedTime();
     private DcMotor leftFront = null; //wheel
     private DcMotor rightFront = null; //wheel
@@ -21,13 +21,12 @@ public class RedNoPark extends LinearOpMode {
     private DcMotor elbow = null;
     private Servo claw = null;
     private Servo wrist = null;
-
     private Auto auto = new Auto(telemetry);
 
     @Override
     public void runOpMode() {
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
-        Pose2d startPose = new Pose2d(-12, -65, Math.toRadians(90));
+        Pose2d startPose = new Pose2d(12, -65, Math.toRadians(90));
         drive.setPoseEstimate(startPose);
 
         //Control Hub (driving controls)
@@ -42,95 +41,89 @@ public class RedNoPark extends LinearOpMode {
         claw = hardwareMap.get(Servo.class, "claw");
         wrist = hardwareMap.get(Servo.class,"wrist");
 
+
         // Wait for the DS start button to be touched.
         telemetry.addData("DS preview on/off", "3 dots, Camera Stream");
         telemetry.addData(">", "Touch Play to start OpMode");
         telemetry.update();
 
         TrajectorySequence trajSeq1Middle = drive.trajectorySequenceBuilder(startPose)
-                .forward(34)
+                .strafeLeft(20)
+                .forward(37)
                 .waitSeconds(1)
+                .build();
+
+        TrajectorySequence trajSeq2Middle = drive.trajectorySequenceBuilder(trajSeq1Middle.end())
+                .strafeLeft(25)
+                .forward(29)
+                .turn(Math.toRadians(-90))
+                .forward(115)
                 .build();
 
         TrajectorySequence trajSeq1Left = drive.trajectorySequenceBuilder(startPose)
-                .strafeLeft(25)
-                .forward(28)
-                .waitSeconds(1)
+                .strafeLeft(31)
+                .forward(25)
                 .build();
 
-        TrajectorySequence trajSeq2 = drive.trajectorySequenceBuilder(startPose)
+        TrajectorySequence trajSeq2Left = drive.trajectorySequenceBuilder(trajSeq1Left.end())
                 .strafeRight(23)
-                .forward(11)
-                .strafeRight(72)
-                .back(35)
-                .strafeRight(70)
+                .forward(38)
+                .turn(Math.toRadians(-90))
+                .forward(95)
+                .build();
+
+        TrajectorySequence trajSeq1Right = drive.trajectorySequenceBuilder(startPose)
+                .strafeLeft(10)
+                .forward(30)
+                .turn(Math.toRadians(-55))
+                .forward(5)
+                .build();
+
+        TrajectorySequence trajSeq2Right = drive.trajectorySequenceBuilder(trajSeq1Right.end())
+                .back(5)
+                .turn(Math.toRadians(55))
+                .strafeLeft(10)
+                .forward(34)
+                .turn(Math.toRadians(-90))
+                .forward(100)
                 .build();
 
         elbow.setPower(0.3);
 
         //elbow.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-
+        auto.init(hardwareMap);
         waitForStart();
+        auto.readSleeve();
 
-        //Cam.initTfod();
-
-        while (opModeIsActive()) {
-
-            //Cam.telemetryTfod();
-
-            drive.followTrajectorySequence(trajSeq1Left);
-            intake_wheels.setPower(-0.5);
-            sleep(2000);
-            intake_wheels.setPower(0);
-            drive.followTrajectorySequence(trajSeq2);
-            sleep(30000);
-
-
-/*
                 if (auto.sleeveSide == CamDetector.Side.FIRST){
-
-                    drive.followTrajectorySequence(trajSeq1Right);
-                    intake_wheels.setPower(-0.75);
+                    drive.followTrajectorySequence(trajSeq1Left);
+                    intake_wheels.setPower(-0.5);
                     sleep(2000);
                     intake_wheels.setPower(0);
-                    drive.followTrajectorySequence(trajSeq2Right);
-                    elbow.setTargetPosition(800);
-                    elbow.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                    elbow.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-                    claw.setPosition(1);
-                    elbow.setTargetPosition(0);
-                    drive.followTrajectorySequence(trajSeq3);
+
+                    drive.followTrajectorySequence(trajSeq2Left);
+                    sleep(30000);
                 }
                 else if (auto.sleeveSide == CamDetector.Side.SECOND){
-
                     drive.followTrajectorySequence(trajSeq1Middle);
-                    intake_wheels.setPower(-0.75);
+                    intake_wheels.setPower(-0.5);
                     sleep(2000);
                     intake_wheels.setPower(0);
-                    drive.followTrajectorySequence(trajSeq2Middle);
-                    elbow.setTargetPosition(800);
-                    elbow.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                    elbow.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-                    claw.setPosition(1);
-                    elbow.setTargetPosition(0);
-                    drive.followTrajectorySequence(trajSeq3);
-                }
-                else {
 
-                    drive.followTrajectorySequence(trajSeq1Left);
-                    intake_wheels.setPower(-0.75);
+                    drive.followTrajectorySequence(trajSeq2Middle);
+                    sleep(30000);
+                }
+                else if (auto.sleeveSide == CamDetector.Side.THIRD){
+
+                    drive.followTrajectorySequence(trajSeq1Right);
+                    intake_wheels.setPower(-0.5);
                     sleep(2000);
                     intake_wheels.setPower(0);
-                    drive.followTrajectorySequence(trajSeq2Left);
-                    elbow.setTargetPosition(800);
-                    elbow.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                    elbow.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-                    claw.setPosition(1);
-                    elbow.setTargetPosition(0);
-                    drive.followTrajectorySequence(trajSeq3);
+
+                    drive.followTrajectorySequence(trajSeq2Right);
+                    sleep(30000);
                 }
-*/
+
         }   // end runOpMode()
 
     }   // end class
-}

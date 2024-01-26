@@ -24,11 +24,11 @@ public class CamDetector extends OpenCvPipeline {
     public static double ROI_WIDTH = 40;
     public static double ROI_HEIGHT = 40;
     //mess around with numbers
-    public static double ROI_X_1 = 40;
+    public static double ROI_X_1 = 50;
     public static double ROI_Y_1 = 130;
-    public static double ROI_X_2 = 155;
+    public static double ROI_X_2 = 165;
     public static double ROI_Y_2 = 120;
-    public static double ROI_X_3 = 275;
+    public static double ROI_X_3 = 285;
     public static double ROI_Y_3 = 140;
 
     // in RGB
