@@ -48,6 +48,7 @@ public class RedRight extends LinearOpMode {
         telemetry.update();
 
         TrajectorySequence trajSeq1Middle = drive.trajectorySequenceBuilder(startPose)
+                .strafeRight(5)
                 .forward(35)
                 .waitSeconds(1)
                 .build();
@@ -56,7 +57,7 @@ public class RedRight extends LinearOpMode {
                 //.forward(30)
                 //.strafeLeft(10)
                 //.turn(Math.toRadians(75))
-                .splineToSplineHeading(new Pose2d(6,-30,Math.toRadians(140)),Math.toRadians(140))
+                .splineToSplineHeading(new Pose2d(6,-31,Math.toRadians(140)),Math.toRadians(140))
                 .build();
 
         TrajectorySequence trajSeq1Right = drive.trajectorySequenceBuilder(startPose)
@@ -78,15 +79,27 @@ public class RedRight extends LinearOpMode {
                 .build();
 
         TrajectorySequence trajSeq2Right = drive.trajectorySequenceBuilder(startPose)
-                .splineToSplineHeading(new Pose2d(40, -34, Math.toRadians(-190)), 190)
+                .splineToSplineHeading(new Pose2d(35, -34, Math.toRadians(-190)), 190)
                 .build();
 
         TrajectorySequence trajSeq2Left = drive.trajectorySequenceBuilder(trajSeqResetLeft.end())
-                .splineToSplineHeading(new Pose2d(50, -21, Math.toRadians(-190)), 190)
+                .splineToSplineHeading(new Pose2d(45, -19, Math.toRadians(-190)), 190)
                 .build();
 
         TrajectorySequence trajSeq2Middle = drive.trajectorySequenceBuilder(startPose)
-                .splineToSplineHeading(new Pose2d(50, -28, Math.toRadians(-190)), 190)
+                .splineToSplineHeading(new Pose2d(47, -26, Math.toRadians(-190)), 190)
+                .build();
+
+        TrajectorySequence Middle3 = drive.trajectorySequenceBuilder(trajSeq2Middle.end())
+                .back(15)
+                .build();
+
+        TrajectorySequence Left3 = drive.trajectorySequenceBuilder(trajSeq2Left.end())
+                .back(20)
+                .build();
+
+        TrajectorySequence Right3 = drive.trajectorySequenceBuilder(trajSeq2Right.end())
+                .back(20)
                 .build();
 
         elbow.setPower(0.3);
@@ -97,6 +110,7 @@ public class RedRight extends LinearOpMode {
         auto.readSleeve();
 
                 if (auto.sleeveSide == CamDetector.Side.FIRST){
+                    intake_wheels.setPower(-0.02);
                     drive.followTrajectorySequence(trajSeq1Left);
                     intake_wheels.setPower(-0.5);
                     sleep(2000);
@@ -109,9 +123,11 @@ public class RedRight extends LinearOpMode {
                     elbow.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                     elbow.setPower(0.4);
 
-                    sleep(1000);
+                    sleep(3500);
 
                     intake_wheels.setPower(0);
+
+                    drive.followTrajectorySequence(Left3);
 
                     claw.setPosition(0);
                     sleep(1000);
@@ -124,14 +140,15 @@ public class RedRight extends LinearOpMode {
                     elbow.setPower(0);
                     sleep(1000);
 
-                    elbow.setTargetPosition(elbow.getCurrentPosition() - 600);
+                    elbow.setTargetPosition(elbow.getCurrentPosition() - 300);
                     elbow.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                    elbow.setPower(-0.7);
+                    elbow.setPower(-0.4);
                     sleep(3000);
                     elbow.setPower(0);
                     sleep(30000);
                 }
                 else if (auto.sleeveSide == CamDetector.Side.SECOND){
+                    intake_wheels.setPower(-0.02);
                     drive.followTrajectorySequence(trajSeq1Middle);
                     intake_wheels.setPower(-0.5);
                     sleep(2000);
@@ -144,6 +161,10 @@ public class RedRight extends LinearOpMode {
                     elbow.setPower(0.4);
 
                     sleep(1000);
+
+                    drive.followTrajectorySequence(Middle3);
+
+                    sleep(1000);
                     claw.setPosition(0);
                     sleep(1000);
                     claw.setPosition(1);
@@ -155,15 +176,15 @@ public class RedRight extends LinearOpMode {
                     elbow.setPower(0);
                     sleep(1000);
 
-                    elbow.setTargetPosition(elbow.getCurrentPosition() - 600);
+                    elbow.setTargetPosition(elbow.getCurrentPosition() - 300);
                     elbow.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                    elbow.setPower(-0.7);
+                    elbow.setPower(-0.4);
                     sleep(3000);
                     elbow.setPower(0);
                     sleep(30000);
                 }
                 else if (auto.sleeveSide == CamDetector.Side.THIRD){
-
+                    intake_wheels.setPower(-0.02);
                     drive.followTrajectorySequence(trajSeq1Right);
                     intake_wheels.setPower(-0.5);
                     sleep(2000);
@@ -176,6 +197,10 @@ public class RedRight extends LinearOpMode {
                     elbow.setPower(0.4);
 
                     sleep(1000);
+
+                    drive.followTrajectorySequence(Right3);
+
+                    sleep(1000);
                     claw.setPosition(0);
                     sleep(1000);
                     claw.setPosition(1);
@@ -187,9 +212,9 @@ public class RedRight extends LinearOpMode {
                     elbow.setPower(0);
                     sleep(1000);
 
-                    elbow.setTargetPosition(elbow.getCurrentPosition() - 600);
+                    elbow.setTargetPosition(elbow.getCurrentPosition() - 300);
                     elbow.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                    elbow.setPower(-0.7);
+                    elbow.setPower(-0.4);
                     sleep(3000);
                     elbow.setPower(0);
                     sleep(30000);

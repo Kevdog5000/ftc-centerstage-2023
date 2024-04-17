@@ -20,7 +20,7 @@ public class Auto {
         this.telemetry = telemetry;
         this.camDetector = new CamDetector(telemetry);
     }
-
+    // all this code just turns the camera on and get ready for the camera code to run
     public void init(HardwareMap hardwareMap) {
         this.hardwareMap = hardwareMap;
 
@@ -59,10 +59,9 @@ public class Auto {
         telemetry.addLine("camera initialized");
         telemetry.addLine("PRESS START");
     }
-
+    // declare function to run the camera code
     public void readSleeve() {
         sleeveSide = camDetector.getSide();
-
         stopCam();
 
         telemetry.clearAll();

@@ -76,7 +76,7 @@ public class BlueRight extends LinearOpMode {
                 .build();
 
         TrajectorySequence trajSeq1Left = drive.trajectorySequenceBuilder(startPose)
-                .forward(30)
+                .forward(33)
                 .turn(Math.toRadians(55))
                 .forward(12)
                 .build();
@@ -99,6 +99,7 @@ public class BlueRight extends LinearOpMode {
         auto.readSleeve();
 
         if (auto.sleeveSide == CamDetector.Side.FIRST){
+            intake_wheels.setPower(-0.02);
             drive.followTrajectorySequence(trajSeq1Left);
             intake_wheels.setPower(-0.5);
             sleep(2000);
@@ -109,6 +110,7 @@ public class BlueRight extends LinearOpMode {
             sleep(30000);
         }
         else if (auto.sleeveSide == CamDetector.Side.SECOND){
+            intake_wheels.setPower(-0.02);
             drive.followTrajectorySequence(trajSeq1Middle);
             intake_wheels.setPower(-0.5);
             sleep(2000);
@@ -118,7 +120,7 @@ public class BlueRight extends LinearOpMode {
             sleep(30000);
         }
         else if (auto.sleeveSide == CamDetector.Side.THIRD){
-
+            intake_wheels.setPower(-0.02);
             drive.followTrajectorySequence(trajSeq1Right);
             intake_wheels.setPower(-0.5);
             sleep(2000);

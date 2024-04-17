@@ -21,6 +21,11 @@ public class CamDetector extends OpenCvPipeline {
     }
     Side side;
 
+    //region of interest (ROI); also known as the boxes
+    //Here you can adjust the size of the boxes and position of them
+    //Increasing the decreasing the x values moves the boxes right and left
+    //The y values are flipped; increasing the y values moves the boxes down
+    //This is because camera needs to be mounted upside down
     public static double ROI_WIDTH = 40;
     public static double ROI_HEIGHT = 40;
     //mess around with numbers
@@ -37,6 +42,7 @@ public class CamDetector extends OpenCvPipeline {
     double max;
 
     // in HSV
+    // for this year, it is programed to only detect blue and red and ignore other colors
     static Scalar HSV_LOW = new Scalar(0, 50, 40);
     static Scalar HSV_HIGH = new Scalar(180, 255, 255);
 
@@ -84,8 +90,11 @@ public class CamDetector extends OpenCvPipeline {
         telemetry.addData("coverage3", Math.round(coverage3 * 100) + '%');
         telemetry.update();
 
+        // max value is just compare which boxes has the highest coverage (most red or blue inside the boxes)
         max = Math.max(coverage1, Math.max(coverage2, coverage3));
 
+        // highlight the box that has the highest max value
+        // set slide to be first, second, or third
         if (coverage1 == max) {
             side = Side.FIRST;
 

@@ -62,12 +62,13 @@ public class BlueLeft extends LinearOpMode {
                 .strafeLeft(10)
                 .forward(30)
                 .turn(Math.toRadians(-55))
-                .forward(7)
+                //.forward(7)
                 .build();
 
         TrajectorySequence trajSeq1Left = drive.trajectorySequenceBuilder(startPose)
                 .strafeLeft(30)
                 .forward(28)
+                .turn(Math.toRadians(20))
                 .waitSeconds(1)
                 .build();
 
@@ -88,23 +89,23 @@ public class BlueLeft extends LinearOpMode {
                 .build();
 
         TrajectorySequence Right3 = drive.trajectorySequenceBuilder(trajSeq2Right.end())
-                .back(15)
+                .back(25)
                 .build();
 
         TrajectorySequence trajSeq2Left = drive.trajectorySequenceBuilder(startPose)
-                .splineToSplineHeading(new Pose2d(30, 34, Math.toRadians(180)), 180)
+                .splineToSplineHeading(new Pose2d(30, 37, Math.toRadians(180)), 180)
                 .build();
 
         TrajectorySequence Left3 = drive.trajectorySequenceBuilder(trajSeq2Left.end())
-                .back(15)
+                .back(30)
                 .build();
 
         TrajectorySequence trajSeq2Middle = drive.trajectorySequenceBuilder(startPose)
-                .splineToSplineHeading(new Pose2d(40, 29, Math.toRadians(180)), 180)
+                .splineToSplineHeading(new Pose2d(40, 31, Math.toRadians(180)), 180)
                 .build();
 
         TrajectorySequence Middle3 = drive.trajectorySequenceBuilder(trajSeq2Middle.end())
-                .back(10)
+                .back(20)
                 .build();
 
         elbow.setPower(0.3);
@@ -116,6 +117,7 @@ public class BlueLeft extends LinearOpMode {
         auto.readSleeve();
 
         if (auto.sleeveSide == CamDetector.Side.FIRST){
+            intake_wheels.setPower(-0.02);
             drive.followTrajectorySequence(trajSeq1Left);
             intake_wheels.setPower(-0.5);
             sleep(2000);
@@ -126,9 +128,9 @@ public class BlueLeft extends LinearOpMode {
             intake_wheels.setPower(0.3);
             elbow.setTargetPosition(elbow.getCurrentPosition()+615);
             elbow.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            elbow.setPower(0.36);
+            elbow.setPower(0.38);
 
-            sleep(3000);
+            sleep(3500);
 
             intake_wheels.setPower(0);
             drive.followTrajectorySequence(Left3);
@@ -144,7 +146,7 @@ public class BlueLeft extends LinearOpMode {
             elbow.setPower(0);
             sleep(1000);
 
-            elbow.setTargetPosition(elbow.getCurrentPosition() - 600);
+            elbow.setTargetPosition(elbow.getCurrentPosition() - 500);
             elbow.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             elbow.setPower(-0.4);
             sleep(3000);
@@ -152,6 +154,7 @@ public class BlueLeft extends LinearOpMode {
             sleep(30000);
         }
         else if (auto.sleeveSide == CamDetector.Side.SECOND){
+            intake_wheels.setPower(-0.02);
             drive.followTrajectorySequence(trajSeq1Middle);
             intake_wheels.setPower(-0.5);
             sleep(2000);
@@ -161,7 +164,7 @@ public class BlueLeft extends LinearOpMode {
 
             elbow.setTargetPosition(elbow.getCurrentPosition()+615);
             elbow.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            elbow.setPower(0.36);
+            elbow.setPower(0.38);
 
             sleep(2000);
 
@@ -178,7 +181,7 @@ public class BlueLeft extends LinearOpMode {
             elbow.setPower(0);
             sleep(1000);
 
-            elbow.setTargetPosition(elbow.getCurrentPosition() - 600);
+            elbow.setTargetPosition(elbow.getCurrentPosition() - 500);
             elbow.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             elbow.setPower(-0.4);
             sleep(3000);
@@ -187,6 +190,7 @@ public class BlueLeft extends LinearOpMode {
         }
         else if (auto.sleeveSide == CamDetector.Side.THIRD){
 
+            intake_wheels.setPower(-0.02);
             drive.followTrajectorySequence(trajSeq1Right);
             intake_wheels.setPower(-0.5);
             sleep(2000);
@@ -196,7 +200,7 @@ public class BlueLeft extends LinearOpMode {
 
             elbow.setTargetPosition(elbow.getCurrentPosition()+615);
             elbow.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            elbow.setPower(0.36);
+            elbow.setPower(0.38);
 
             drive.followTrajectorySequence(Right3);
 
@@ -212,9 +216,9 @@ public class BlueLeft extends LinearOpMode {
             elbow.setPower(0);
             sleep(1000);
 
-            elbow.setTargetPosition(elbow.getCurrentPosition() - 600);
+            elbow.setTargetPosition(elbow.getCurrentPosition() - 500);
             elbow.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            elbow.setPower(-0.6);
+            elbow.setPower(-0.4);
             sleep(3000);
             elbow.setPower(0);
             sleep(30000);
